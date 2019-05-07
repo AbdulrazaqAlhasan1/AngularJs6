@@ -1,0 +1,39 @@
+<div class="card mb-6" style="max-width: auto;">
+  <div class="row no-gutters"
+    ng-repeat="product in products | filter: searchText | orderBy:sortColumn | limitTo:rowLimits">
+    <div class="col-md-4">
+      <img ng-src="{{ product.image }}" class="card-img" alt="...">
+    </div>
+    <div class="col-md-8">
+      <div class="card-body">
+        <h5 class="card-title">{{ product.name }}</h5>
+        <span id="price">{{ product.price }}</span>
+        <div class="stars-outer">
+          <div class="stars-inner" ng-style="{ 'width': rating(product.rating) }">
+          </div>
+        </div>
+        <div id="quantity" class="row">
+          <div class="row ">
+            <div class="col-md-5"><input class="quantity col-md-11" type="number" name="quantity" id="quantity"
+                ng-model="product.quantity">
+            </div>
+            <div class="col-md-6">{{product.price * product.quantity}} SEK</div>
+          </div>
+          <div>
+            <div>
+              <button class="mb-2 btn btn-sm btn-success" ng-click="addItem(product)">Add to Cart</button>
+            </div>
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div>
+    <div class="scrollTop">
+      <a href="#">Back To Top</a>
+    </div>
+
+  </div>

@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="myApp">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Angular js</title>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
+        integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css"
+        integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="css/style.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.8/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.7/angular-route.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.7/angular-cookies.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.9.1/underscore-min.js"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
+        integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.8.1/css/regular.css"
+        integrity="sha384-ELBQxbOyxSZRtZPNO1mVgYkEzMOXFNmQY6CLV1nw+4IZoiHWeuwYTnABxPxxsuBE" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.8.1/css/fontawesome.css"
+        integrity="sha384-4HqGlagEHMyfaDQVabl1wx7GCtGw6hDl3sKJEhqQjOCrXrvizhaA2j4hK8Piewtr" crossorigin="anonymous">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.7/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.7/angular-animate.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.9.1/underscore-min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.7/angular-route.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.7/angular-cookies.min.js"></script>
+    <script src="js/script.js"></script>
+    <script src="js/dialog.service.js"></script>
+    <script src="js/user.service.js"></script>
+    <script src="js/auth.service.js"></script>
+</head>
+
+<body>
+
+    <!--------------- top bar -------------->
+    <section class="top-bar">
+        <div class="top-bar-resize">
+            <div class="nav-icons">
+                <ul>
+                    <li><a href=""><i class="fab fa-facebook-square"></i></a></li>
+                    <li><a href=""><i class="fab fa-twitter"></i></a></li>
+                    <li><a href=""><i class="fab fa-behance"></i></a></li>
+                    <li><a href=""><i class="fab fa-pinterest"></i></a></li>
+                    <li><a href=""><i class="fab fa-youtube"></i></a></li>
+                </ul>
+            </div>
+            <div>
+                <a href="">FAQ</a>
+            </div>
+            <div>
+                <a href="">TERMS</a>
+            </div>
+            <div>
+                <a href=""><i class="far fa-envelope"></i> info@webmail.com</a>
+            </div>
+            <div>
+                <div class="shopping-vagn">
+                    <div class="row mt-1">
+                        <div><a href="#!login" style="color:blue; font-size:12px; "><strong>Loga
+                                    in</strong></a></div>
+
+                        <div>
+                            <ul>
+                                <li>
+                                    <a href="" data-toggle="modal" data-target="#exampleModal"> <i
+                                            class="fas fa-shopping-cart" style="font-size: 15px;  color:blue;"></i><span
+                                            class="badge badge-pill" ng-class="badgeColor">{{ getQuantity() }}</span>
+                                    </a>
+                                </li>
+                            </ul>
+
+
+                            <!-- Modal för kund vagen -->
+                            <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
+                                aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLabel">Your card</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+
+                                            <p>{{ emptycart }}</p>
+                                            <table>
+                                                <tr ng-repeat="product in cart">
+                                                    <td>{{product.quantity}} x {{ product.name }}</td>
+                                                    <td>{{getProductCost(product)}} :-</td>
+                                                    <td><button class="btn btn-link remove-item "
+                                                            ng-click="removeItem(product)"><i class="fas fa-trash-alt"
+                                                                style="color:black;"></i></button></td>
+                                                </tr>
+                                            </table>
+                                            <h4 class="mt-2">Total: {{ getTotal() }} SEK</h4>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+
+    <!--------------- nav bar -------------->
+    <section class="background-whaite">
+
+        <div id="nav-bar">
+            <div id="logo">
+                <img src="images/logo.jpg" alt="" width="200px; hejght: 100px;">
+            </div>
+            <div>
+                <select name="" id="lang">
+                    <option value="default">EN</option>
+                </select>
+            </div>
+            <div>
+                <div id="call-us">
+                    +90878 87 878 7
+                </div>
+            </div>
+
+            <div id="navigation">
+                <ul>
+                    <li>Home</li>
+                    <li>About</li>
+                    <li>services</li>
+                    <li>Pages</li>
+                    <li>News</li>
+                    <li>Contact</li>
+                </ul>
+            </div>
+            <div>
+                <div id="get-a-quote">
+                    get-a-quote
+                </div>
+          
+
+            </div>
+        </div>
+    </section>
+
+
+    <!--------------- product stor -------------->
+    <section class="product-stor">
+        <div class="my-header">
+            <p>DIGITAL MARKETING</p>
+            <h1>Product Store</h1>
+            <div>
+                <ul>
+                    <li><a href="">Home</a></li> |
+                    <li><a href="">Shop</a></li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <div class="wrapper">
+        <div class="main">
+            <div class="main-1">
+                <div class="icons">
+                    <i class="fas fa-truck"></i>
+                </div>
+                <p><strong>Free Shipping</strong></p>
+                <small class="text-muted">Orders over 100$</small>
+            </div>
+
+            <div class="main-2">
+                <div class="icons">
+                    <i class="fas fa-truck-pickup"></i> </div>
+                <p><strong>Free Return</strong></p>
+                <small class="text-muted">In 30 Days</small>
+            </div>
+            <div class="main-3">
+                <div class="icons">
+                    <i class="fas fa-peace"></i> </div>
+                <p><strong>100% Secure</strong></p>
+                <small class="text-muted">Shipping</small>
+            </div>
+            <div class="main-4">
+                <div class="icons">
+                    <i class="fas fa-greater-than-equal"></i>
+                </div>
+                <p><strong>Best Price</strong></p>
+                <small class="small">Grented</small>
+            </div>
+        </div>
+
+
+
+        <!--------------- search bar -------------->
+        <section id="search">
+            <div class="circle-1">
+                <a href="#!horizontal"><i class=" fas fa-th"></i>
+                </a>
+            </div>
+            <div class="circle-2">
+                <a href="#!vertical"> <i class="fas fa-sliders-h"></i>
+                </a>
+            </div>
+
+            <div class="row-limits">
+                Showing result
+                <select ng-model="rowLimits">
+                    <option value="">välj</option>
+                    <option value="5">5</option>
+                    <option value="10">10</option>
+                    <option value="20">20</option>
+                    <option value="50">50</option>
+                    <option value="100">100</option>
+
+                </select>
+
+            </div>
+            <div class="sort-text">
+                <select ng-model="sortColumn" name="" id="">
+                    <option value="">Sort by</option>
+                    <option value="name">Product</option>
+                    <option value="price">Price</option>
+                    <option value="rating">Rekommendation</option>
+
+                </select>
+            </div>
+            <div class="search-list">
+                <input type="search" ng-model="searchText" placeholder="Search from here...">
+            </div>
+        </section>
+
+
+        <!--------------- products -------------->
+
+        <section class="contain">
+            <div>
+                <div ng-view>
+                </div>
+            </div>
+        </section>
+
+        <!--------------- move bar -------------->
+        <div class="move">
+            <div class="color-silver">
+                <i class="fas fa-arrow-left"></i>
+            </div>
+            <div>01</div>
+            <div class="color-orange">02</div>
+            <div>03</div>
+            <div>04</div>
+            <div>
+                <i class="fas fa-arrow-right"></i>
+            </div>
+        </div>
+        </section>
+    </div>
+
+
+    <!--------------- footer -------------->
+    <section class="footer">
+        <div class="container">
+            <div class="footer-1">
+                <div class="footer-logo"></div>
+                <div>Lorem ipsum, dolor sit amet consectetur adipisicing elit. consectetur adipisicing elit. A alias
+                    facilis, explicabo A alias facilis, explicabo beatae omnis, dol, Lorem ipsum dolor sit amet,
+                    consectetur adipisicing elit. Voluptatum, aut. ea quvoluptas quae.
+                </div>
+                <div class="footer-icons">
+                    <ul>
+                        <li><a href=""><i class="fab fa-facebook-square"></i></a></li>
+                        <li><a href=""><i class="fab fa-twitter"></i></a></li>
+                        <li><a href=""><i class="fab fa-behance"></i></a></li>
+                        <li><a href=""><i class="fab fa-youtube"></i></a></li>
+                        <li><a href=""><i class="fab fa-pinterest"></i></a></li>
+                    </ul>
+                </div>
+            </div>
+            <div>
+                <h6>More Links</h6>
+                <div class="footer-2">
+                    <div>Paid SEO</div>
+                    <div>Digital Markiting</div>
+                    <div>Staratigy Planing</div>
+                    <div>Offline SEO</div>
+                    <div>Page Rank Up</div>
+                    <div>User Panel</div>
+                    <div>Services</div>
+                    <div>Ouer Team</div>
+                    <div>News</div>
+                    <div>Shop</div>
+                    <div>Contact Us</div>
+                    <div>Book Apointment</div>
+                </div>
+            </div>
+
+            <div>
+                <h6>News Feeds</h6>
+                <div class="footer-4">
+                    <div id="footer-color"></div>
+                    <div>
+                        <h6>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ratione, similique!</h6>
+                        <p>14july 2019</p>
+                    </div>
+
+                    <div id="footer-color"></div>
+                    <div>
+                        <h6>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ratione, similique!</h6>
+                        <p>14july 2019</p>
+                    </div>
+                    <div id="footer-color"></div>
+                    <div>
+                        <h6>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ratione, similique!</h6>
+                        <p>14july 2019</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="copy-right">
+            copyright By@<a class="font-color-orange" href="">NillArtStudio-</a>2019
+        </div>
+    </section>
+    <div>
+        <div class="scrollTop">
+            <a href="#">Back To Top</a>
+        </div>
+
+    </div>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>
